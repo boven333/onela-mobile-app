@@ -43,7 +43,8 @@ class WelcomePage extends ConsumerWidget {
                     AppStrings.promoTitle,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       color: Colors.white,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
                     ),
                   ),
                   const SizedBox(height: 6),
@@ -51,7 +52,8 @@ class WelcomePage extends ConsumerWidget {
                     AppStrings.promoSubtitle,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: Colors.white.withOpacity(0.95),
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
                     ),
                   ),
                   const SizedBox(height: 18),

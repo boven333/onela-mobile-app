@@ -8,4 +8,5 @@ class AppColors {
   static const Color fieldBorder = Color(0xFFE5E7EB);
   static const Color greyButton = Color(0xFFE5E7EB);
   static const Color shadow = Color(0x14000000);
+  static const Color shopapp = Color(0xFEF7ECD2);
 }

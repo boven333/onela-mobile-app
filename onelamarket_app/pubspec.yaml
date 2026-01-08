@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_riverpod: ^3.1.0
+  intl: ^0.20.2
 
 dev_dependencies:
   flutter_test:
@@ -25,3 +26,9 @@ flutter:
     - assets/icons/ic_line.png
     - assets/icons/ic_google.png
     - assets/icons/ic_facebook.png
+    - assets/icons/
+
+  fonts:
+    - family: NotoSansThai
+      fonts:
+        - asset: assets/fonts/NotoSansThai-VariableFont_wdth,wght.ttf

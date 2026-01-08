@@ -20,7 +20,7 @@ class PrimaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bg = isPrimary ? AppColors.brand : AppColors.greyButton;
-    final fg = isPrimary ? AppColors.textDark : AppColors.textDark;
+    final fg = isPrimary ? const Color.fromARGB(255, 255, 255, 255) : AppColors.textDark;
 
     return SizedBox(
       height: AppSizes.buttonH,
@@ -29,6 +29,11 @@ class PrimaryButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: bg,
           foregroundColor: fg,
+          textStyle: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            fontFamily: "NotoSansThai",
+          ),
           elevation: 0,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
         ),
@@ -39,7 +44,7 @@ class PrimaryButton extends StatelessWidget {
                 width: 18,
                 child: CircularProgressIndicator(strokeWidth: 2),
               )
-            : Text(text, style: const TextStyle(fontWeight: FontWeight.w700)),
+            : Text(text, style: const TextStyle(fontWeight: FontWeight.bold)),
       ),
     );
   }

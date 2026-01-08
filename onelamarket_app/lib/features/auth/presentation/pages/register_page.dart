@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:onelamarket_app/features/auth/presentation/controllers/signup_flow_controller.dart';
+import 'package:onelamarket_app/features/auth/presentation/controllers/signup_flow_state.dart';
 
 import '../../../../core/constants/app_sizes.dart';
 import '../../../../core/constants/app_strings.dart';
@@ -75,7 +77,18 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                 onPressed: () async {
                   FocusScope.of(context).unfocus();
                   if (!(_formKey.currentState?.validate() ?? false)) return;
+
+                  // set flow method = email
+                  ref
+                      .read(signupFlowProvider.notifier)
+                      .setAuthMethod(AuthMethod.email, email: _email.text.trim());
+
+                  // mock register
                   await ref.read(authControllerProvider.notifier).registerEmail(_email.text.trim());
+
+                  // ไปหน้าถัดไปตาม rule
+                  final next = ref.read(signupFlowProvider.notifier).nextAfterRegister();
+                  Navigator.pushNamed(context, next);
                 },
               ),
 
@@ -97,29 +110,53 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                 text: AppStrings.continueWithLine,
                 onPressed: auth.isLoading
                     ? null
-                    : () => ref
-                          .read(authControllerProvider.notifier)
-                          .signInSocial(SocialProvider.line),
+                    : () async {
+                        // 1) บอก flow ว่าใช้ social
+                        ref.read(signupFlowProvider.notifier).setAuthMethod(AuthMethod.social);
+
+                        // 2) mock sign in
+                        await ref
+                            .read(authControllerProvider.notifier)
+                            .signInSocial(SocialProvider.line);
+
+                        // 3) ไปหน้าถัดไปตาม rule (household->shop / business->businessInfo)
+                        final next = ref.read(signupFlowProvider.notifier).nextAfterRegister();
+                        Navigator.pushNamed(context, next);
+                      },
               ),
               const SizedBox(height: 10),
+
               SocialButton(
                 iconPath: Assets.icGoogle,
                 text: AppStrings.continueWithGoogle,
                 onPressed: auth.isLoading
                     ? null
-                    : () => ref
-                          .read(authControllerProvider.notifier)
-                          .signInSocial(SocialProvider.google),
+                    : () async {
+                        ref.read(signupFlowProvider.notifier).setAuthMethod(AuthMethod.social);
+                        await ref
+                            .read(authControllerProvider.notifier)
+                            .signInSocial(SocialProvider.google);
+
+                        final next = ref.read(signupFlowProvider.notifier).nextAfterRegister();
+                        Navigator.pushNamed(context, next);
+                      },
               ),
               const SizedBox(height: 10),
+
               SocialButton(
                 iconPath: Assets.icFacebook,
                 text: AppStrings.continueWithFacebook,
                 onPressed: auth.isLoading
                     ? null
-                    : () => ref
-                          .read(authControllerProvider.notifier)
-                          .signInSocial(SocialProvider.facebook),
+                    : () async {
+                        ref.read(signupFlowProvider.notifier).setAuthMethod(AuthMethod.social);
+                        await ref
+                            .read(authControllerProvider.notifier)
+                            .signInSocial(SocialProvider.facebook);
+
+                        final next = ref.read(signupFlowProvider.notifier).nextAfterRegister();
+                        Navigator.pushNamed(context, next);
+                      },
               ),
             ],
           ),

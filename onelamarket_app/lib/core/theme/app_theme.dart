@@ -5,11 +5,11 @@ import 'text_theme.dart';
 
 class AppTheme {
   static ThemeData get light {
-    final base = ThemeData.light();
-
-    return base.copyWith(
+    return ThemeData(
+      useMaterial3: true,
+      fontFamily: 'NotoSansThai', // ✅ ทั้งแอปใช้ NotoSansThai
       scaffoldBackgroundColor: AppColors.surface,
-      colorScheme: base.colorScheme.copyWith(primary: AppColors.brand, surface: AppColors.surface),
+      colorScheme: ColorScheme.fromSeed(seedColor: AppColors.brand),
       textTheme: AppTextTheme.textTheme,
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.white,

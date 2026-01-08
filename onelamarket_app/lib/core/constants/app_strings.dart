@@ -4,7 +4,7 @@ class AppStrings {
   static const household = 'Household';
   static const business = 'Business';
 
-  static const promoTitle = 'รับ ฿0 ค่าส่ง';
+  static const promoTitle = 'รับ ฿0 ค่าจัดส่ง';
   static const promoSubtitle = 'สำหรับคำสั่งซื้อครั้งแรก';
 
   static const startHousehold = 'เริ่มต้นกับ Onelamarket สำหรับครัวเรือน';

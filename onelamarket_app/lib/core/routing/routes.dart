@@ -18,4 +18,8 @@ class Routes {
   static const orderDetail = '/order-detail';
 
   static const profile = '/profile';
+  static const settings = '/settings';
+  static const addressMenu = '/settings/address';
+  static const addressList = '/settings/address/list'; // arguments: AddressType
+  static const addressForm = '/settings/address/form'; // arguments: AddressFormArgs
 }

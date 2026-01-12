@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:onelamarket_app/core/routing/routes.dart';
 import 'package:onelamarket_app/features/auth/presentation/controllers/signup_flow_controller.dart';
 import 'package:onelamarket_app/features/auth/presentation/controllers/signup_flow_state.dart';
 
@@ -88,7 +89,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
 
                   // ไปหน้าถัดไปตาม rule
                   final next = ref.read(signupFlowProvider.notifier).nextAfterRegister();
-                  Navigator.pushNamed(context, next);
+                  Navigator.pushReplacementNamed(context, Routes.main);
                 },
               ),
 
@@ -121,7 +122,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
 
                         // 3) ไปหน้าถัดไปตาม rule (household->shop / business->businessInfo)
                         final next = ref.read(signupFlowProvider.notifier).nextAfterRegister();
-                        Navigator.pushNamed(context, next);
+                        Navigator.pushReplacementNamed(context, Routes.main);
                       },
               ),
               const SizedBox(height: 10),

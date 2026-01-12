@@ -8,7 +8,6 @@ import '../../../../core/constants/app_sizes.dart';
 import '../../../../core/routing/routes.dart';
 import '../../../shop/presentation/controllers/cart_controller.dart';
 import '../../../shop/presentation/controllers/catalog_controller.dart';
-import '../../presentation/controllers/reorder_controller.dart';
 
 // ===== PAGE =====
 class ReorderPage extends ConsumerWidget {
@@ -131,35 +130,35 @@ class ReorderPage extends ConsumerWidget {
 
                 // ===== LIST (Vertical) =====
                 Expanded(
-                  child: Container(
-                    color: Colors.white,
-                    child: ListView.separated(
-                      padding: const EdgeInsets.fromLTRB(AppSizes.p16, 8, AppSizes.p16, 120),
-                      itemCount: items.length,
-                      separatorBuilder: (_, __) => const Divider(height: 18),
-                      itemBuilder: (context, i) {
-                        final p = items[i];
-                        final qty = qtyOf(p.id);
+                  child: items.isEmpty
+                      ? const _EmptyCartView()
+                      : Container(
+                          color: Colors.white,
+                          child: ListView.separated(
+                            padding: const EdgeInsets.fromLTRB(AppSizes.p16, 8, AppSizes.p16, 120),
+                            itemCount: items.length,
+                            separatorBuilder: (_, __) => const Divider(height: 18),
+                            itemBuilder: (context, i) {
+                              final p = items[i];
+                              final qty = qtyOf(p.id);
 
-                        return _ReorderListTile(
-                          productId: p.id,
-                          imageAsset: p.imageAsset,
-                          title: p.name,
-                          subtitle: p.subtitle,
-                          price: p.price,
-                          qty: qty,
-                          onAddFirst: () => ref.read(cartProvider.notifier).add(p),
-                          onInc: () => ref.read(cartProvider.notifier).inc(p.id),
-                          onDec: () => ref.read(cartProvider.notifier).dec(p.id),
-
-                          // ✅ ลบแบบ swipe ซ้าย (ใช้ง่าย + ไม่รก)
-                          onRemove: () {
-                            ref.read(reorderControllerProvider.notifier).remove(p.id);
-                          },
-                        );
-                      },
-                    ),
-                  ),
+                              return _ReorderListTile(
+                                productId: p.id,
+                                imageAsset: p.imageAsset,
+                                title: p.name,
+                                subtitle: p.subtitle,
+                                price: p.price,
+                                qty: qty,
+                                onAddFirst: () => ref.read(cartProvider.notifier).add(p),
+                                onInc: () => ref.read(cartProvider.notifier).inc(p.id),
+                                onDec: () => ref.read(cartProvider.notifier).dec(p.id),
+                                onRemove: () {
+                                  ref.read(reorderHistoryProvider.notifier).remove(p.id);
+                                },
+                              );
+                            },
+                          ),
+                        ),
                 ),
               ],
             ),
@@ -419,6 +418,32 @@ class _CategoryItem extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _EmptyCartView extends StatelessWidget {
+  const _EmptyCartView();
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: const [
+          Icon(Icons.shopping_cart_outlined, size: 64, color: Colors.black26),
+          SizedBox(height: 12),
+          Text(
+            'ยังไม่มีรายการสินค้า',
+            style: TextStyle(fontWeight: FontWeight.w800, fontSize: 16, color: Colors.black54),
+          ),
+          SizedBox(height: 4),
+          Text(
+            'เพิ่มสินค้าเพื่อเริ่มทำรายการ',
+            style: TextStyle(fontSize: 13, color: Colors.black38),
           ),
         ],
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:onelamarket_app/core/constants/app_colors.dart';
 import 'package:onelamarket_app/features/orders/presentation/controllers/orders_controller.dart';
 
 import '../../../../core/routing/routes.dart';
@@ -14,12 +15,9 @@ class OrdersPage extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.brand,
         automaticallyImplyLeading: false, // ✅ เอาลูกศรกลับออกชัวร์
-        title: const Text(
-          'Order',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w900),
-        ),
+        title: const Text('ออเดอร์', style: TextStyle(color: Colors.black, fontSize: 20)),
       ),
       body: orders.isEmpty
           ? const Center(

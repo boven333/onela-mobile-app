@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:onelamarket_app/features/shop/presentation/controllers/cart_recommend_provider.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_sizes.dart';
@@ -19,6 +20,8 @@ class CartPage extends ConsumerWidget {
     final subtotal = cartCtrl.subtotal;
 
     final upsell = MockCatalog.products.take(4).toList();
+
+    final recommend = ref.watch(cartRecommendProvider);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -86,30 +89,34 @@ class CartPage extends ConsumerWidget {
             ),
             const SizedBox(height: 12),
 
-            GridView.builder(
-              itemCount: upsell.length,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 12,
-                crossAxisSpacing: 12,
-                childAspectRatio: 0.80,
-              ),
-              itemBuilder: (context, i) {
-                final p = upsell[i];
-                return ProductCard(
-                  productId: p.id,
-                  imageAsset: p.imageAsset,
-                  title: p.name,
-                  subtitle: p.subtitle,
-                  priceText: '฿${p.price}',
-                  onAddFirst: () => ref.read(cartProvider.notifier).add(p),
-                );
-              },
-            ),
+            if (recommend.isNotEmpty) ...[
+              const SizedBox(height: 12),
+              const Text('สินค้าเพิ่มเติม', style: TextStyle(fontWeight: FontWeight.w900)),
+              const SizedBox(height: 10),
 
-            const SizedBox(height: 80),
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: recommend.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 12,
+                  crossAxisSpacing: 12,
+                  childAspectRatio: 0.78, // ปรับตาม card
+                ),
+                itemBuilder: (context, i) {
+                  final p = recommend[i];
+                  return ProductCard(
+                    productId: p.id,
+                    imageAsset: p.imageAsset,
+                    title: p.name,
+                    subtitle: p.subtitle,
+                    priceText: '฿${p.price}',
+                    onAddFirst: () => ref.read(cartProvider.notifier).add(p),
+                  );
+                },
+              ),
+            ],
           ],
         ),
       ),

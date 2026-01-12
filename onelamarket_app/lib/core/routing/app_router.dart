@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:onelamarket_app/features/auth/presentation/pages/profile_page.dart';
 import 'package:onelamarket_app/features/orders/presentation/pages/order_detail_page.dart';
 import 'package:onelamarket_app/features/orders/presentation/pages/order_page.dart';
+import 'package:onelamarket_app/features/profile/presentation/pages/address_form_page.dart';
+import 'package:onelamarket_app/features/profile/presentation/pages/address_list_page.dart';
+import 'package:onelamarket_app/features/profile/presentation/pages/address_menu_page.dart';
+import 'package:onelamarket_app/features/profile/presentation/pages/settings_page.dart'
+    show SettingsPage;
 import 'package:onelamarket_app/features/shell/presentation/pages/main_shell.dart';
 import 'package:onelamarket_app/features/shop/presentation/pages/shop_page.dart';
 
@@ -54,6 +59,15 @@ class AppRouter {
           settings: settings, // ✅ สำคัญ (ช่วยให้ ModalRoute มองเห็น arguments)
           builder: (_) => const OrderDetailPage(),
         );
+
+      case Routes.settings:
+        return MaterialPageRoute(builder: (_) => const SettingsPage(), settings: settings);
+      case Routes.addressMenu:
+        return MaterialPageRoute(builder: (_) => const AddressMenuPage(), settings: settings);
+      case Routes.addressList:
+        return MaterialPageRoute(builder: (_) => const AddressListPage(), settings: settings);
+      case Routes.addressForm:
+        return MaterialPageRoute(builder: (_) => const AddressFormPage(), settings: settings);
 
       default:
         return MaterialPageRoute(builder: (_) => const WelcomePage());

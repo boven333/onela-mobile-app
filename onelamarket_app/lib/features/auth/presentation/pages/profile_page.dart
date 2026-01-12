@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:onelamarket_app/core/constants/app_colors.dart';
+import 'package:onelamarket_app/features/profile/presentation/sheet/settings_sheet.dart';
 
 import '../../../../core/constants/app_sizes.dart';
 
@@ -11,7 +12,7 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white, // ✅ แบบรูปที่ 1
       appBar: AppBar(
-        backgroundColor: AppColors.shopapp,
+        backgroundColor: AppColors.brand,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
@@ -34,7 +35,12 @@ class ProfilePage extends StatelessWidget {
                     icon: Icons.settings,
                     label: 'ตั้งค่า',
                     onPressed: () {
-                      // Navigator.pushNamed(context, Routes.settings);
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        backgroundColor: Colors.transparent,
+                        builder: (_) => const SettingsSheet(),
+                      );
                     },
                   ),
                 ),
@@ -119,7 +125,7 @@ class _TopActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: const Color(0xFFF1E6D6),
+      color: AppColors.surface,
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
